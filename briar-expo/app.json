@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Briar Development",
+    "slug": "briar-development",
+    "platforms": ["android"],
+    "scheme": "briar-development",
+    "android": {
+      "package": "org.briarproject.briar.expo",
+      "allowBackup": false
+    },
+    "plugins": [["expo-dev-client", { "launchMode": "launcher" }]]
+  }
+}

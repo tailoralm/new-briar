@@ -1,0 +1,9 @@
+# Briar frontend migration
+
+- Keep the upstream Android client buildable and available as the parity reference. Treat briar-core, bramble-core, briar-api, bramble-api, the platform modules, headless client and Mailbox submodule as upstream-owned. Keep upstream fixes separate from frontend commits and record the reason for every required upstream patch.
+- Keep migration code in `briar-expo/` by default. Preserve `BriarApplicationImpl`, `BriarService`, the Dagger graph, eager-singleton ordering and Android entry points until their replacements pass the relevant parity tests. Use the [class inventory](docs/android-class-inventory.md) when planning moves.
+- TypeScript screens call TypeScript application services. Application services call typed native adapters. Native adapters use `briar-api` and `bramble-api` contracts and delegate Android duties to the native host. Keep database access, protocol logic, keys, Tor and transport implementations inside Briar/Bramble.
+- Keep account/lock enforcement, trusted intent validation, panic responses, platform permissions, notifications and the service lifecycle native. Route calls on the appropriate upstream executors, translate errors into typed results and remove event subscriptions when their owner ends.
+- Keep production accounts, messages and invite links out of the Expo development shell and Metro. Retain the separate application ID during this stage. Never log credentials, keys, invite links, message contents or attachment URIs.
+- Update [feature parity](docs/feature-parity.md) and the relevant tests with each migrated workflow. Record device and peer coverage before marking a workflow complete. Preserve fallback behavior for denied permissions, crashes, process death and app upgrades.
+- Run the checks in [development](docs/development.md) for the modules touched. Commit the frontend npm lockfile. Keep generated Android output and local build configuration out of version control.
